@@ -9,7 +9,22 @@ import ProfileEdit from './pages/ProfileEdit';
 import NotFound from './pages/NotFound';
 
 class App extends React.Component {
+  constructor() {
+    super();
+
+    this.state = {
+      login: '',
+    };
+  }
+
+  handleLogin = ({ target }) => {
+    this.setState({
+      login: target.value,
+    });
+  }
+
   render() {
+    // const { login } = this.state;
     return (
       <>
         <p>TrybeTunes</p>
@@ -20,7 +35,15 @@ class App extends React.Component {
           <Route exact path="/favorites" component={ Favorites } />
           <Route exact path="/profile" component={ Profile } />
           <Route exact path="/profile/edit" component={ ProfileEdit } />
-          <Route exact path="/" component={ Login } />
+          <Route
+            exact
+            path="/"
+            render={ (props) => (<Login
+              { ...props }
+              { ...this.state }
+              handleLogin={ this.handleLogin }
+            />) }
+          />
           <Route component={ NotFound } />
         </Switch>
       </>
