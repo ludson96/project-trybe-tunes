@@ -50,6 +50,7 @@ class Search extends Component {
           <input
             type="text"
             name="artistInput"
+            value={ artistInput }
             placeholder="Nome do Artista"
             data-testid="search-artist-input"
             onChange={ this.disabledButtonAndInputValue }
