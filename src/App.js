@@ -14,23 +14,33 @@ class App extends React.Component {
 
     this.state = {
       login: '',
+      artist: '',
     };
   }
 
-  handleLogin = ({ target }) => {
+  inputChangeLogin = ({ target }) => {
     this.setState({
       login: target.value,
     });
+    console.log(this.state);
   }
 
   render() {
-    // const { login } = this.state;
+    const { login, artist } = this.state;
     return (
       <>
         <p>TrybeTunes</p>
 
         <Switch>
-          <Route exact path="/search" component={ Search } />
+          <Route
+            exact
+            path="/search"
+            component={ (props) => (<Search
+              { ...props }
+              artist={ artist }
+              inputChange={ this.inputChange }
+            />) }
+          />
           <Route exact path="/album/:id" component={ Album } />
           <Route exact path="/favorites" component={ Favorites } />
           <Route exact path="/profile" component={ Profile } />
@@ -40,8 +50,8 @@ class App extends React.Component {
             path="/"
             render={ (props) => (<Login
               { ...props }
-              { ...this.state }
-              handleLogin={ this.handleLogin }
+              login={ login }
+              inputChangeLogin={ this.inputChangeLogin }
             />) }
           />
           <Route component={ NotFound } />

@@ -15,7 +15,7 @@ export default class Login extends Component {
   }
 
   render() {
-    const { handleLogin, login } = this.props;
+    const { inputChangeLogin, login } = this.props;
     const { loading } = this.state;
 
     // Condição para veririficar se o botão tem 3 ou mais caracteres
@@ -39,7 +39,7 @@ export default class Login extends Component {
                     type="text"
                     data-testid="login-name-input"
                     name="login"
-                    onChange={ handleLogin }
+                    onChange={ inputChangeLogin }
                   />
                 </label>
                 <button
@@ -59,7 +59,7 @@ export default class Login extends Component {
 }
 
 Login.propTypes = {
-  handleLogin: PropTypes.func.isRequired,
+  inputChangeLogin: PropTypes.func.isRequired,
   login: PropTypes.string.isRequired,
   history: PropTypes.objectOf(PropTypes.objectOf).isRequired,
 };
