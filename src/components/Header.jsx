@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import { getUser } from '../services/userAPI';
 
 export default class Header extends Component {
@@ -12,11 +13,10 @@ export default class Header extends Component {
   }
 
   handleCreateUser = async () => {
-    const response = await getUser();
-    console.log(response);
+    const data = await getUser();
     this.setState({
       loading: false,
-      nome: response.name,
+      nome: data.name,
     });
   }
 
@@ -32,6 +32,11 @@ export default class Header extends Component {
               </div>
             )
         }
+        <nav>
+          <Link to="/search" data-testid="link-to-search">Search</Link>
+          <Link to="/favorites" data-testid="link-to-favorites">Favoritas</Link>
+          <Link to="/profile" data-testid="link-to-profile">Perfil</Link>
+        </nav>
       </header>
     );
   }
