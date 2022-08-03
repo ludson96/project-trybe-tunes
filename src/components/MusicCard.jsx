@@ -22,7 +22,7 @@ export default class MusicCard extends Component {
   favoriteFunction = async (song) => {
     const { checado } = this.state;
     this.setState({ loading: true });
-    const filterChecado = checado.filter((e) => song.trackId === e);
+    const filterChecado = checado.find((e) => song.trackId === e);
     if (filterChecado) {
       await removeSong(song);
       const data = await getFavoriteSongs();
