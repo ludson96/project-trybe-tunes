@@ -4,12 +4,10 @@ import PropTypes, { objectOf } from 'prop-types';
 export default class MusicCard extends Component {
   render() {
     const { content } = this.props;
-    console.log(content);
     return (
       <div>
         {content.map((e) => (
           e.kind === 'song' && (
-
             <div key={ e.collectionViewUrl }>
               <p>{e.trackName}</p>
 
@@ -21,6 +19,10 @@ export default class MusicCard extends Component {
                 <code>audio</code>
                 .
               </audio>
+              <label htmlFor="Favorita" data-testid={ `checkbox-music-${e.trackId}` }>
+                Favorita:
+                <input type="checkbox" name="Favorita" />
+              </label>
             </div>
           )
 
