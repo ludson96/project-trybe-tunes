@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes, { objectOf } from 'prop-types';
-import { addSong, getFavoriteSongs } from '../services/favoriteSongsAPI';
+import { addSong, getFavoriteSongs, removeSong } from '../services/favoriteSongsAPI';
 
 export default class MusicCard extends Component {
   constructor() {
@@ -20,12 +20,26 @@ export default class MusicCard extends Component {
   }
 
   favoriteFunction = async (song) => {
-    this.setState((prevState) => ({
-      checado: [...prevState.checado, song.trackID],
-      loading: true,
-    }));
-    await addSong(song);
-    this.setState({ loading: false });
+    const { checado } = this.state;
+    this.setState({ loading: true });
+    const filterChecado = checado.filter((e) => song.trackId === e);
+    if (filterChecado) {
+      await removeSong(song);
+      const data = await getFavoriteSongs();
+      const getIds = data.map((e) => e.trackId);
+      this.setState({
+        checado: getIds,
+      });
+      this.setState({ loading: false });
+    } else {
+      await addSong(song);
+      const data = await getFavoriteSongs();
+      const getIds = data.map((e) => e.trackId);
+      this.setState({
+        checado: getIds,
+      });
+      this.setState({ loading: false });
+    }
   }
 
   render() {
