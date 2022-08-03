@@ -21,8 +21,6 @@ async componentDidMount() {
 
 render() {
   const { content, loading } = this.state;
-  console.log(content);
-
   return (
     <div data-testid="page-album">
       <Header />
