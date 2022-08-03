@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes, { objectOf } from 'prop-types';
-import { addSong } from '../services/favoriteSongsAPI';
+import { addSong, getFavoriteSongs } from '../services/favoriteSongsAPI';
 
 export default class MusicCard extends Component {
   constructor() {
@@ -9,6 +9,14 @@ export default class MusicCard extends Component {
       loading: false,
       checado: [],
     };
+  }
+
+  async componentDidMount() {
+    const data = await getFavoriteSongs();
+    const getIds = data.map((e) => e.trackId);
+    this.setState({
+      checado: getIds,
+    });
   }
 
   favoriteFunction = async (song) => {
