@@ -25,7 +25,6 @@ export default class MusicCard extends Component {
               </label>
             </div>
           )
-
         ))}
       </div>
     );
