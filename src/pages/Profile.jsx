@@ -19,7 +19,6 @@ class Profile extends Component {
        infoUser: data,
        loading: false,
      });
-     console.log(data);
    }
 
    render() {
