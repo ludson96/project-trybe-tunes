@@ -8,12 +8,20 @@ export default class MusicCard extends Component {
     this.state = {
       loading: false,
       checado: [],
+      musicasExibidas: [],
     };
   }
 
   async componentDidMount() {
-    const data = await getFavoriteSongs();
-    const getIds = data.map((e) => e.trackId);
+    const { filtroFavorito, content } = this.props;
+    if (filtroFavorito) {
+      const data = await getFavoriteSongs();
+      this.setState({ musicasExibidas: data });
+    } else {
+      this.setState({ musicasExibidas: content });
+    }
+    const data2 = await getFavoriteSongs();
+    const getIds = data2.map((e) => e.trackId);
     this.setState({
       checado: getIds,
     });
@@ -21,35 +29,46 @@ export default class MusicCard extends Component {
 
   favoriteFunction = async (song) => {
     const { checado } = this.state;
+    const { filtroFavorito } = this.props;
     this.setState({ loading: true });
-    const filterChecado = checado.find((e) => song.trackId === e);
-    if (filterChecado) {
+    if (filtroFavorito) {
       await removeSong(song);
-      const data = await getFavoriteSongs();
-      const getIds = data.map((e) => e.trackId);
+      const data1 = await getFavoriteSongs();
       this.setState({
-        checado: getIds,
+        musicasExibidas: data1,
+        loading: false,
       });
-      this.setState({ loading: false });
     } else {
-      await addSong(song);
-      const data = await getFavoriteSongs();
-      const getIds = data.map((e) => e.trackId);
-      this.setState({
-        checado: getIds,
-      });
-      this.setState({ loading: false });
+      const filterChecado = checado.find((e) => song.trackId === e);
+      if (filterChecado) {
+        await removeSong(song);
+        const data2 = await getFavoriteSongs();
+        const getIds = data2.map((e) => e.trackId);
+        this.setState({
+          checado: getIds,
+          musicasExibidas: data2,
+        });
+        this.setState({ loading: false });
+      } else {
+        await addSong(song);
+        const data3 = await getFavoriteSongs();
+        const getIds = data3.map((e) => e.trackId);
+        this.setState({
+          checado: getIds,
+          musicasExibidas: data3,
+        });
+        this.setState({ loading: false });
+      }
     }
   }
 
   render() {
-    const { content } = this.props;
-    const { loading, checado } = this.state;
+    const { loading, checado, musicasExibidas } = this.state;
     return (
       <div>
         {loading
           ? <span>Carregando...</span> : (
-            content.map((e) => (
+            musicasExibidas.map((e) => (
               e.kind === 'song' && (
                 <div key={ e.collectionViewUrl }>
                   <p>{e.trackName}</p>
@@ -82,4 +101,5 @@ export default class MusicCard extends Component {
 
 MusicCard.propTypes = {
   content: PropTypes.objectOf(objectOf()).isRequired,
+  filtroFavorito: PropTypes.bool.isRequired,
 };

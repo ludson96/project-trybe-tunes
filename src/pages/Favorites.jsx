@@ -8,7 +8,8 @@ class Favorites extends Component {
     super();
     this.state = {
       musicasFavoritas: '',
-      loading: true,
+      loading: false,
+      filtroFavorito: true,
     };
   }
 
@@ -26,15 +27,14 @@ class Favorites extends Component {
    }
 
    render() {
-     const { musicasFavoritas, loading } = this.state;
+     const { musicasFavoritas, loading, filtroFavorito } = this.state;
      return (
        <div data-testid="page-favorites">
          <Header />
          {loading
            ? <span>Carregando...</span> : (
              <div>
-               <MusicCard content={ musicasFavoritas } />
-               {/* {this.teste()} */}
+               <MusicCard content={ musicasFavoritas } filtro={ filtroFavorito } />
              </div>
            )}
        </div>
