@@ -7,7 +7,7 @@ class Favorites extends Component {
   constructor() {
     super();
     this.state = {
-      musicasFavoritas: '',
+      mFavoritas: '',
       loading: false,
       filtroFavorito: true,
     };
@@ -21,22 +21,19 @@ class Favorites extends Component {
      this.setState({ loading: true });
      const data = await getFavoriteSongs();
      this.setState({
-       musicasFavoritas: data,
+       mFavoritas: data,
        loading: false,
      });
    }
 
    render() {
-     const { musicasFavoritas, loading, filtroFavorito } = this.state;
+     const { mFavoritas, loading, filtroFavorito } = this.state;
      return (
        <div data-testid="page-favorites">
          <Header />
          {loading
-           ? <span>Carregando...</span> : (
-             <div>
-               <MusicCard content={ musicasFavoritas } filtro={ filtroFavorito } />
-             </div>
-           )}
+           ? <span>Carregando...</span>
+           : <MusicCard content={ mFavoritas } filtro={ filtroFavorito } />}
        </div>
      );
    }
