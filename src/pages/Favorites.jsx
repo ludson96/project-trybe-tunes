@@ -1,45 +1,42 @@
-import React from 'react';
+import React, { Component } from 'react';
 import Header from '../components/Header';
-import { getFavoriteSongs } from '../services/favoriteSongsAPI';
-import Loading from './Loading';
 import MusicCard from '../components/MusicCard';
+import { getFavoriteSongs } from '../services/favoriteSongsAPI';
 
-class Favorites extends React.Component {
+class Favorites extends Component {
   constructor() {
     super();
     this.state = {
-      favoriteSongs: [],
+      mFavoritas: '',
       loading: false,
-      isFavoritePage: true,
+      filtroFavorito: true,
     };
   }
 
   componentDidMount() {
-    this.loadFavoriteSongs();
+    this.favoritMusics();
   }
 
-  loadFavoriteSongs = async () => {
-    this.setState({
-      loading: true,
-    });
-    const favoriteSongs = await getFavoriteSongs();
-    this.setState({
-      favoriteSongs,
-      loading: false,
-    });
-  }
+   favoritMusics = async () => {
+     this.setState({ loading: true });
+     const data = await getFavoriteSongs();
+     this.setState({
+       mFavoritas: data,
+       loading: false,
+     });
+   }
 
-  render() {
-    const { loading, favoriteSongs, isFavoritePage } = this.state;
-    return (
-      <div data-testid="page-favorites">
-        <Header />
-        { loading
-          ? <Loading />
-          : <MusicCard albumSongs={ favoriteSongs } isFavoritePage={ isFavoritePage } />}
-      </div>
-    );
-  }
+   render() {
+     const { mFavoritas, loading, filtroFavorito } = this.state;
+     return (
+       <div data-testid="page-favorites">
+         <Header />
+         {loading
+           ? <span>Carregando...</span>
+           : <MusicCard content={ mFavoritas } filtro={ filtroFavorito } />}
+       </div>
+     );
+   }
 }
 
 export default Favorites;
