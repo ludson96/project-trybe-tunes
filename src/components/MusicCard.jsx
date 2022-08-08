@@ -1,101 +1,117 @@
-import React, { Component } from 'react';
-import PropTypes, { objectOf } from 'prop-types';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { addSong, getFavoriteSongs, removeSong } from '../services/favoriteSongsAPI';
+import Loading from '../pages/Loading';
 
-export default class MusicCard extends Component {
+class MusicCard extends React.Component {
   constructor() {
     super();
     this.state = {
+      isChecked: [],
       loading: true,
-      checado: [],
-      musicasExibidas: [],
+      songsTorender: [],
     };
   }
 
   async componentDidMount() {
-    const { filtro, content } = this.props;
-    if (filtro) {
-      const data = await getFavoriteSongs();
-      this.setState({ musicasExibidas: data });
+    const { albumSongs, isFavoritePage } = this.props;
+    if (isFavoritePage) {
+      const favoriteSongs = await getFavoriteSongs();
+      this.setState({
+        songsTorender: favoriteSongs,
+      });
     } else {
-      this.setState({ musicasExibidas: content });
+      this.setState({
+        songsTorender: albumSongs,
+      });
     }
-    const data2 = await getFavoriteSongs();
-    const getIds = data2.map((e) => e.trackId);
+    const idsFromAPI = await this.getTrackIds();
     this.setState({
-      checado: getIds,
+      isChecked: idsFromAPI,
       loading: false,
     });
   }
 
-  favoriteFunction = async (song) => {
-    const { checado } = this.state;
-    const { filtro } = this.props;
+  getTrackIds = async () => {
+    const favoriteSongs = await getFavoriteSongs();
+    const favoriteSongsIds = favoriteSongs.map((song) => song.trackId);
+    return favoriteSongsIds;
+  }
+
+  handleCheckbox = async (track) => {
+    const { isFavoritePage } = this.props;
+    const { isChecked } = this.state;
     this.setState({ loading: true });
-    if (filtro) {
-      await removeSong(song);
-      const data3 = await getFavoriteSongs();
+    if (isFavoritePage) {
+      await removeSong(track);
+      const favoriteSongs = await getFavoriteSongs();
       this.setState({
-        musicasExibidas: data3,
+        songsTorender: favoriteSongs,
         loading: false,
       });
     } else {
-      const filterChecado = checado.find((e) => song.trackId === e);
-      if (filterChecado) {
-        await removeSong(song);
+      const alreadyFav = isChecked.find((fav) => track.trackId === fav);
+      if (alreadyFav) {
+        await removeSong(track);
       } else {
-        await addSong(song);
+        await addSong(track);
       }
-      const data5 = await getFavoriteSongs();
-      const getIds = data5.map((e) => e.trackId);
-      const { content } = this.props;
+      const ids = await this.getTrackIds();
+      const { albumSongs } = this.props;
       this.setState({
+        isChecked: ids,
         loading: false,
-        checado: getIds,
-        musicasExibidas: content,
+        songsTorender: albumSongs,
       });
     }
   }
 
   render() {
-    const { loading, checado, musicasExibidas } = this.state;
-    console.log(musicasExibidas);
+    const { loading, isChecked, songsTorender } = this.state;
     return (
       <div>
         {loading
-          ? <span>Carregando...</span> : (
-            musicasExibidas.map((e) => (
-              e.kind === 'song' && (
-                <section key={ e.collectionViewUrl }>
-                  <h5>{e.trackName}</h5>
-
-                  <audio data-testid="audio-component" src={ e.previewUrl } controls>
-                    <track kind="captions" />
-                    O seu navegador não suporta o elemento
-                    {' '}
-                    {' '}
-                    <code>audio</code>
-                    .
-                  </audio>
-                  <label htmlFor={ `checkbox-music-${e.trackId}` }>
-                    Favorita
-                    <input
-                      type="checkbox"
-                      data-testid={ `checkbox-music-${e.trackId}` }
-                      id={ `checkbox-music-${e.trackId}` }
-                      checked={ checado.some((elemento) => e.trackId === elemento) }
-                      onChange={ () => this.favoriteFunction(e) }
-                    />
-                  </label>
-                </section>
-              )
+          ? <Loading /> : (
+            songsTorender.map((track) => (
+              <section key={ track.trackName }>
+                <h5>{track.trackName}</h5>
+                <audio data-testid="audio-component" src={ track.previewUrl } controls>
+                  <track kind="captions" />
+                  O seu navegador não suporta o elemento
+                  {' '}
+                  {' '}
+                  <code>audio</code>
+                  .
+                </audio>
+                <label htmlFor={ `checkbox-music-${track.trackId}` }>
+                  Favorita
+                  <input
+                    type="checkbox"
+                    data-testid={ `checkbox-music-${track.trackId}` }
+                    id={ `checkbox-music-${track.trackId}` }
+                    checked={ isChecked.some((id) => track.trackId === id) }
+                    onChange={ () => this.handleCheckbox(track) }
+                  />
+                </label>
+              </section>
             )))}
       </div>
+
     );
   }
 }
 
 MusicCard.propTypes = {
-  content: PropTypes.objectOf(objectOf()).isRequired,
-  filtro: PropTypes.bool.isRequired,
+  albumSongs: PropTypes.arrayOf(PropTypes.shape({
+    trackName: PropTypes.string.isRequired,
+    previewUrl: PropTypes.string.isRequired,
+    trackId: PropTypes.number.isRequired,
+  })).isRequired,
+  isFavoritePage: PropTypes.bool,
 };
+
+MusicCard.defaultProps = {
+  isFavoritePage: false,
+};
+
+export default MusicCard;

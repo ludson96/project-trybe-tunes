@@ -1,43 +1,57 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import Header from '../components/Header';
-import getMusics from '../services/musicsAPI';
+import musicsAPI from '../services/musicsAPI';
 import MusicCard from '../components/MusicCard';
 
-class Album extends Component {
-state = {
-  content: '',
-  loading: false,
-}
+class Album extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      albumData: [],
+      showAlbumData: false,
+    };
+  }
 
-async componentDidMount() {
-  const { match: { params: { id } } } = this.props;
-  const data = await getMusics(id);
-  this.setState({
-    content: data,
-    loading: true,
-  });
-}
+  async componentDidMount() {
+    const { match: { params: { id } } } = this.props;
+    const albumData = await musicsAPI(id);
+    const tracks = albumData
+      .filter((object) => Object.keys(object).includes('trackName'));
+    this.setState({
+      albumData,
+      albumSongs: tracks,
+    }, () => {
+      this.setState({ showAlbumData: true });
+    });
+  }
 
-render() {
-  const { content, loading } = this.state;
-  return (
-    <div data-testid="page-album">
-      <Header />
-      <div data-testid="artist-name">
-        {loading && content[0].artistName}
+  render() {
+    const { albumData, showAlbumData, albumSongs } = this.state;
+    return (
+      <div data-testid="page-album">
+        <Header />
+        {
+          showAlbumData && (
+            <main>
+              <h3 data-testid="artist-name">{albumData[0].artistName}</h3>
+              <h4 data-testid="album-name">{albumData[0].collectionName}</h4>
+              <MusicCard albumSongs={ albumSongs } />
+            </main>
+          )
+        }
+
       </div>
-      <div data-testid="album-name">
-        {loading && (`${content[0].collectionName} ${content[0].artistName}`)}
-      </div>
-      {loading && <MusicCard content={ content } />}
-    </div>
-  );
+    );
+  }
 }
-}
-
-export default Album;
 
 Album.propTypes = {
-  match: PropTypes.number.isRequired,
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.string.isRequired,
+    }).isRequired,
+  }).isRequired,
 };
+
+export default Album;
