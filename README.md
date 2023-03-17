@@ -9,7 +9,7 @@
 ## Informações de aprendizados
 
 - Este é um projeto desenvolvido para praticar `React`, `Passagem de props`, `Cilo de vida` e `React Router`;
-- Primeiro teste utilizando `React Router` e `Ciclo de vida de um componente`;
+- Primeiro projeto utilizando `React Router` e `Ciclo de vida de um componente`;
 
 ## Linguagens e ferramentas usadas
 
