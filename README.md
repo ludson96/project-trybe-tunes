@@ -1,17 +1,17 @@
-# Repositório do projeto Trybetunes ⏯️
+# Repositório do projeto Trybetunes
 
 # 🚧 Estilização em desenvolvimento ! 🚧
 
-## 📚 Módulo: 🎨 Front-end
+## Módulo: Front-end
 
  Repositório possuí projeto desenvolvido no período que estive na **Trybe**, abordando conceitos de ciclo de vida de um componente e React Router Dom.
 
-## 🎓 Informações de aprendizados
+## Informações de aprendizados
 
 - Este é um projeto desenvolvido para praticar `React`, `Passagem de props`, `Cilo de vida` e `React Router`;
 - Primeiro teste utilizando `React Router` e `Ciclo de vida de um componente`;
 
-## 🛠️ Linguagens e ferramentas usadas
+## Linguagens e ferramentas usadas
 
 [![Git][Git-logo]][Git-url]
 [![ESLint][ESLint-logo]][ESLint-url]
@@ -20,7 +20,7 @@
 [![JavaScript][JavaScript-logo]][JavaScript-url]
 [![React][React-logo]][React-url]
 
-## 🧑🏾‍💻 O que foi desenvolvido
+## O que foi desenvolvido
 
 Neste projeto, criei o TrybeTunes, uma aplicação capaz de reproduzir músicas das mais variadas bandas e artistas, criar uma lista de músicas favoritas e editar o perfil da pessoa usuária logada. Essa aplicação é capaz de:
 
@@ -36,7 +36,7 @@ Neste projeto, criei o TrybeTunes, uma aplicação capaz de reproduzir músicas 
 
 Figma de um protótipo [figma](https://www.figma.com/file/BDQgAJvOe4KNUjmrYh5t68/TrybeTunes-Figma).
 
-## 📝 Habilidades
+## Habilidades
 
 Neste projeto, desenvolvi as seguintes habilidades:
 
@@ -48,7 +48,7 @@ Neste projeto, desenvolvi as seguintes habilidades:
 - Utilizar o Switch do React Router;
 - Criar links de navegação na aplicação com o componente Link.
 
-## 💻 Instruções para instalar e rodar
+## Instruções para instalar e rodar
 
 1. Clone o repo:
 
