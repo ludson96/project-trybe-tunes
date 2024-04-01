@@ -1,4 +1,4 @@
-# Repositório do projeto Trybetunes
+# Repositório do projeto Trybetunes 🎧
 
 # 🚧 Estilização em desenvolvimento ! 🚧
 
