@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { ArrowRight, Sparkles, Disc3 } from 'lucide-react';
+import { ArrowRight, Disc3 } from 'lucide-react';
 import { useAuthStore } from '../store/useAuthStore';
 
 interface LoginProps {
@@ -43,7 +43,6 @@ export const Login: React.FC<LoginProps> = () => {
 
           <h1 className="text-2xl font-bold tracking-tight text-white sm:text-3xl flex items-center gap-2">
             TunesApp
-            <Sparkles className="h-5 w-5 text-brand-green" />
           </h1>
           <p className="mt-2 text-sm text-zinc-400">
             Entre com seu nome para explorar álbuns, músicas e montar sua playlist favorita.

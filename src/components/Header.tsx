@@ -1,16 +1,25 @@
 import React, { useEffect } from 'react';
-import { NavLink, Link } from 'react-router-dom';
-import { Music, Search, Heart, User } from 'lucide-react';
+import { NavLink, Link, useHistory } from 'react-router-dom';
+import { Music, Search, Heart, User, LogOut } from 'lucide-react';
 import { useAuthStore } from '../store/useAuthStore';
+import { usePlayerStore } from '../store/usePlayerStore';
 
 export const Header: React.FC = () => {
-  const { user, loading, fetchUser } = useAuthStore();
+  const history = useHistory();
+  const { user, loading, fetchUser, logout } = useAuthStore();
+  const { resetPlayer } = usePlayerStore();
 
   useEffect(() => {
     if (!user) {
       fetchUser();
     }
   }, [user, fetchUser]);
+
+  const handleLogout = async () => {
+    resetPlayer();
+    await logout();
+    history.push('/');
+  };
 
   return (
     <header
@@ -45,7 +54,7 @@ export const Header: React.FC = () => {
           }
         >
           <Search className="h-4 w-4" />
-          <span>Pesquisar</span>
+          <span className="hidden sm:inline">Pesquisar</span>
         </NavLink>
 
         <NavLink
@@ -60,7 +69,7 @@ export const Header: React.FC = () => {
           }
         >
           <Heart className="h-4 w-4" />
-          <span>Favoritas</span>
+          <span className="hidden sm:inline">Favoritas</span>
         </NavLink>
 
         <NavLink
@@ -75,37 +84,50 @@ export const Header: React.FC = () => {
           }
         >
           <User className="h-4 w-4" />
-          <span>Perfil</span>
+          <span className="hidden sm:inline">Perfil</span>
         </NavLink>
       </nav>
 
-      {/* User Info Capsule */}
-      <div className="flex items-center gap-3">
+      {/* User Info & Logout Button */}
+      <div className="flex items-center gap-2.5">
         {loading ? (
           <div className="flex items-center gap-2 rounded-full bg-zinc-900/80 px-3 py-1.5 text-xs text-zinc-400 border border-zinc-800">
             <span className="h-2 w-2 animate-ping rounded-full bg-brand-green" />
             Carregando...
           </div>
         ) : (
-          <Link
-            to="/profile"
-            className="flex items-center gap-2.5 rounded-full bg-zinc-900/90 py-1 pl-1.5 pr-3.5 border border-zinc-800/80 transition-all hover:border-zinc-700 hover:bg-zinc-850"
-          >
-            {user?.image ? (
-              <img
-                src={user.image}
-                alt={user.name || 'Usuário'}
-                className="h-8 w-8 rounded-full object-cover ring-2 ring-brand-green/30"
-              />
-            ) : (
-              <div className="flex h-8 w-8 items-center justify-center rounded-full bg-zinc-800 text-zinc-300 font-semibold text-xs ring-1 ring-zinc-700">
-                {user?.name ? user.name.slice(0, 2).toUpperCase() : <User className="h-4 w-4" />}
+          <>
+            <Link
+              to="/profile"
+              className="flex items-center gap-2.5 rounded-full bg-zinc-900/90 py-1 pl-1.5 pr-3 border border-zinc-800/80 transition-all hover:border-zinc-700 hover:bg-zinc-850"
+            >
+              {user?.image ? (
+                <img
+                  src={user.image}
+                  alt={user.name || 'Usuário'}
+                  className="h-8 w-8 rounded-full object-cover ring-2 ring-brand-green/30"
+                />
+              ) : (
+                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-zinc-800 text-zinc-300 font-semibold text-xs ring-1 ring-zinc-700">
+                  {user?.name ? user.name.slice(0, 2).toUpperCase() : <User className="h-4 w-4" />}
+                </div>
+              )}
+              <div data-testid="header-user-name" className="text-xs font-semibold text-zinc-200 hidden md:block">
+                {user?.name || 'Visitante'}
               </div>
-            )}
-            <div data-testid="header-user-name" className="text-xs font-semibold text-zinc-200">
-              {user?.name || 'Visitante'}
-            </div>
-          </Link>
+            </Link>
+
+            {/* Logout Button */}
+            <button
+              type="button"
+              onClick={handleLogout}
+              data-testid="logout-button"
+              title="Sair da conta"
+              className="flex h-9 w-9 items-center justify-center rounded-full bg-zinc-900/90 border border-zinc-800 text-zinc-400 transition-all hover:bg-rose-500/10 hover:border-rose-500/30 hover:text-rose-400 active:scale-95"
+            >
+              <LogOut className="h-4 w-4" />
+            </button>
+          </>
         )}
       </div>
     </header>

@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { User as UserIcon, Mail, FileText, Edit3, ShieldCheck } from 'lucide-react';
+import { Link, useHistory } from 'react-router-dom';
+import { User as UserIcon, Mail, FileText, Edit3, ShieldCheck, LogOut } from 'lucide-react';
 import Header from '../components/Header';
 import { useAuthStore } from '../store/useAuthStore';
 
 export const Profile: React.FC = () => {
-  const { user, loading, fetchUser } = useAuthStore();
+  const history = useHistory();
+  const { user, loading, fetchUser, logout } = useAuthStore();
 
   useEffect(() => {
     fetchUser();
@@ -49,13 +50,27 @@ export const Profile: React.FC = () => {
                   )}
                 </div>
 
-                <Link
-                  to="/profile/edit"
-                  className="flex items-center gap-2 rounded-xl bg-brand-green px-5 py-2.5 text-sm font-bold text-black shadow-lg shadow-brand-green/20 transition-all hover:bg-brand-hover hover:scale-105 active:scale-95 w-fit"
-                >
-                  <Edit3 className="h-4 w-4" />
-                  <span>Editar perfil</span>
-                </Link>
+                <div className="flex items-center gap-3 w-fit">
+                  <Link
+                    to="/profile/edit"
+                    className="flex items-center gap-2 rounded-xl bg-brand-green px-5 py-2.5 text-sm font-bold text-black shadow-lg shadow-brand-green/20 transition-all hover:bg-brand-hover hover:scale-105 active:scale-95"
+                  >
+                    <Edit3 className="h-4 w-4" />
+                    <span>Editar perfil</span>
+                  </Link>
+
+                  <button
+                    type="button"
+                    onClick={async () => {
+                      await logout();
+                      history.push('/');
+                    }}
+                    className="flex items-center gap-2 rounded-xl bg-zinc-800 px-4 py-2.5 text-sm font-bold text-rose-400 border border-zinc-700/60 transition-all hover:bg-rose-500/10 hover:border-rose-500/30 active:scale-95"
+                  >
+                    <LogOut className="h-4 w-4" />
+                    <span>Sair da conta</span>
+                  </button>
+                </div>
               </div>
 
               {/* User Fields Card */}

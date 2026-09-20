@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { User } from '../types';
-import { getUser, createUser, updateUser } from '../services/userAPI';
+import { getUser, createUser, updateUser, logoutUser } from '../services/userAPI';
 
 interface AuthState {
   user: User | null;
@@ -8,6 +8,7 @@ interface AuthState {
   fetchUser: () => Promise<void>;
   login: (name: string) => Promise<void>;
   updateProfile: (userData: User) => Promise<void>;
+  logout: () => Promise<void>;
 }
 
 export const useAuthStore = create<AuthState>((set) => ({
@@ -42,6 +43,16 @@ export const useAuthStore = create<AuthState>((set) => ({
       set({ user: userData, loading: false });
     } catch {
       set({ loading: false });
+    }
+  },
+
+  logout: async () => {
+    set({ loading: true });
+    try {
+      await logoutUser();
+      set({ user: null, loading: false });
+    } catch {
+      set({ user: null, loading: false });
     }
   },
 }));

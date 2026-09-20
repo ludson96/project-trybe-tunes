@@ -16,6 +16,12 @@ const saveUser = (user: User) => {
   }
 };
 
+const clearUser = () => {
+  if (typeof window !== 'undefined') {
+    localStorage.removeItem(USER_KEY);
+  }
+};
+
 const simulateRequest = <T>(response: T) => (callback: (data: T) => void) => {
   setTimeout(() => {
     callback(response);
@@ -43,5 +49,11 @@ export const createUser = (user: Partial<User>): Promise<string> =>
 export const updateUser = (updatedUser: User): Promise<string> =>
   new Promise((resolve) => {
     saveUser({ ...updatedUser });
+    simulateRequest(SUCCESS_STATUS)(resolve);
+  });
+
+export const logoutUser = (): Promise<string> =>
+  new Promise((resolve) => {
+    clearUser();
     simulateRequest(SUCCESS_STATUS)(resolve);
   });
