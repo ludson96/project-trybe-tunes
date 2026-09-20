@@ -1,88 +1,106 @@
-# Repositório do projeto Trybetunes 🎧
+# 🎧 TunesApp Pro
 
-# 🚧 Estilização em desenvolvimento ! 🚧
+[![React](https://img.shields.io/badge/React-18.3-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://reactjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.7-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.4-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
+[![Zustand](https://img.shields.io/badge/Zustand-5.0-443e38?style=for-the-badge&logo=react&logoColor=white)](https://zustand-demo.pmnd.rs/)
+[![Axios](https://img.shields.io/badge/Axios-1.7-5A29E4?style=for-the-badge&logo=axios&logoColor=white)](https://axios-http.com/)
+[![Vite](https://img.shields.io/badge/Vite-6.1-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev/)
+[![Vitest](https://img.shields.io/badge/Vitest-3.0-6E9F18?style=for-the-badge&logo=vitest&logoColor=white)](https://vitest.dev/)
 
-## Módulo: Front-end
+Uma plataforma moderna de streaming e descoberta musical desenvolvida em **React 18** com **TypeScript** e **Tailwind CSS**. A aplicação consome a API oficial do **iTunes Search**, oferecendo busca em tempo real de discografias, reprodução contínua de áudio, sistema reativo de músicas favoritas e gerenciamento de perfil.
 
- Repositório possuí projeto desenvolvido no período que estive na **Trybe**, abordando conceitos de ciclo de vida de um componente e React Router Dom.
+Projetada com arquitetura modular, tipagem estrita, gerenciamento de estado global descentralizado e suíte automatizada de testes unitários e de integração.
 
-## Informações de aprendizados
+---
 
-- Este é um projeto desenvolvido para praticar `React`, `Passagem de props`, `Cilo de vida` e `React Router`;
-- Primeiro projeto utilizando `React Router` e `Ciclo de vida de um componente`;
+## ⚡ Principais Funcionalidades
 
-## Linguagens e ferramentas usadas
+- **Autenticação & Sessão:** Login intuitivo com validação reativa e persistência de perfil em store global.
+- **Descoberta de Artistas & Álbuns:** Integração via **Axios** com a API do iTunes, tratando capas em alta resolução e paginação visual em grid responsivo.
+- **Página do Álbum:** Visualização detalhada de faixas, ano de lançamento, contagem de músicas e metadados.
+- **Player Contínuo Global:** Player fixo no rodapé alimentado por **Zustand**, permitindo que as prévias de áudio continuem tocando enquanto o usuário navega livremente pelas telas.
+- **Sistema Reativo de Favoritos:** Adicione ou remova músicas aos favoritos com feedback visual instantâneo (optimistic update) e persistência local.
+- **Gerenciamento de Perfil:** Visualização com banner estilizado, foto de perfil, bio e formulário de edição com validações.
+- **Design System Dark Mode:** Interface construída com **Tailwind CSS**, inspirada nas principais plataformas de streaming (Spotify/Apple Music), com micro-interações, tipografia Inter e suporte completo a dispositivos móveis.
 
-[![Git][Git-logo]][Git-url]
-[![ESLint][ESLint-logo]][ESLint-url]
-[![HTML5][HTML5-logo]][HTML5-url]
-[![CSS3][CSS3-logo]][CSS3-url]
-[![JavaScript][JavaScript-logo]][JavaScript-url]
-[![React][React-logo]][React-url]
+---
 
-## O que foi desenvolvido
+## 🛠️ Stack Tecnológica & Decisões Arquiteturais
 
-Neste projeto, criei o TrybeTunes, uma aplicação capaz de reproduzir músicas das mais variadas bandas e artistas, criar uma lista de músicas favoritas e editar o perfil da pessoa usuária logada. Essa aplicação é capaz de:
+| Tecnologia | Finalidade | Por que foi escolhida? |
+| :--- | :--- | :--- |
+| **React 18 + Vite** | Framework & Build Tool | Alta performance no desenvolvimento, HMR instantâneo e suporte ao padrão de ponta do ecossistema. |
+| **TypeScript** | Superset tipado | Garante segurança em tempo de compilação, interfaces para respostas da API e redução de bugs. |
+| **Tailwind CSS** | Estilização Utilitária | Interface fluida, consistente e rápida de iterar, com paleta Dark Mode e design responsivo. |
+| **Zustand** | Gerenciamento de Estado | Leveza, ausência de boilerplate (ao contrário de Redux) e facilidade para desacoplar lógica das telas (`useAuthStore`, `useFavoritesStore`, `usePlayerStore`). |
+| **Axios** | Cliente HTTP | Instância centralizada (`api.ts`), tipagem facilitada de responses e tratamento de timeouts. |
+| **Vitest + RTL** | Testes Automatizados | Execução ultrarrápida, compatibilidade nativa com ESM e cobertura de testes de integração e unitários. |
 
-- Fazer login;
-- Pesquisar por uma banda ou artista;
-- Listar os álbuns disponíveis dessa banda ou artista;
-- Visualizar as músicas de um álbum selecionado;
-- Reproduzir uma prévia das músicas deste álbum;
-- Favoritar e desfavoritar músicas;
-- Ver a lista de músicas favoritas;
-- Ver o perfil da pessoa logada;
-- Editar o perfil da pessoa logada.
+---
 
-Figma de um protótipo [figma](https://www.figma.com/file/BDQgAJvOe4KNUjmrYh5t68/TrybeTunes-Figma).
+## 🚀 Como Executar o Projeto Localmente
 
-## Habilidades
+### Pré-requisitos
+- **Node.js** (versão 18 ou superior recomendada)
+- **npm** ou **yarn**
 
-Neste projeto, desenvolvi as seguintes habilidades:
+### Instalação
 
-- Fazer requisições e consumir dados vindos de uma API;
-- Utilizar os ciclos de vida de um componente React;
-- Utilizar a função setState de forma a garantir que um determinado código só é executado após o estado ser atualizado;
-- Utilizar o componente BrowserRouter corretamente;
-- Criar rotas, mapeando o caminho da URL com o componente correspondente, via Route;
-- Utilizar o Switch do React Router;
-- Criar links de navegação na aplicação com o componente Link.
+1. Clone o repositório:
+```bash
+git clone https://github.com/Ludson96/project-trybe-tunes.git
+cd project-trybe-tunes
+```
 
-## Instruções para instalar e rodar
+2. Instale as dependências:
+```bash
+npm install
+```
 
-1. Clone o repo:
+3. Inicie o servidor de desenvolvimento:
+```bash
+npm run dev
+```
+Acesse a aplicação no navegador em `http://localhost:5173`.
 
-    ```bash
-    git clone git@github.com:Ludson96/project-trybe-tunes.git
-    ```
+---
 
-1. Entre na pasta do repositório que você acabou de clonar:
+## 🧪 Execução dos Testes
 
-    ```bash
-    cd project-trybe-tunes
-    ```
+Para rodar a suíte de testes com **Vitest**:
 
-1. Instale as dependências:
+```bash
+# Executa todos os testes e exibe o relatório de cobertura/sucesso
+npm run test
 
-    ```bash
-    npm install
-    ```
+# Modo interativo com watch
+npm run test:watch
+```
 
-1. Execute a aplicação `React`:
+Para verificar a integridade da tipagem TypeScript e gerar o bundle de produção:
 
-    ```bash
-    npm start
-    ```
+```bash
+npm run build
+```
 
-[Git-logo]: https://img.shields.io/badge/git-%23F05033.svg?style=for-the-badge&logo=git&logoColor=white
-[Git-url]: https://git-scm.com
-[ESLint-logo]: https://img.shields.io/badge/ESLint-4B3263?style=for-the-badge&logo=eslint&logoColor=white
-[ESLint-url]: https://eslint.org/
-[HTML5-logo]: https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white
-[HTML5-url]: https://developer.mozilla.org/pt-BR/docs/Web/HTML
-[CSS3-logo]: https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white
-[CSS3-url]: https://developer.mozilla.org/pt-BR/docs/Web/CSS
-[JavaScript-logo]: https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E
-[JavaScript-url]: https://www.javascript.com/
-[React-logo]: https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB
-[React-url]: https://reactjs.org
+---
+
+## 📁 Estrutura de Diretórios
+
+```text
+src/
+├── components/         # Componentes reutilizáveis (Header, MusicCard, GlobalPlayer)
+├── pages/              # Páginas da aplicação (Login, Search, Album, Favorites, Profile, ProfileEdit)
+├── services/           # Clientes HTTP Axios e persistência (api, searchAlbumsAPI, musicsAPI, etc.)
+├── store/              # Gerenciamento de estado global com Zustand (Auth, Favorites, Player)
+├── tests/              # Suíte de testes com Vitest e Testing Library
+├── types/              # Interfaces centrais TypeScript
+├── App.tsx             # Roteamento e orquestração da aplicação
+├── index.css           # Configurações do Tailwind CSS e diretivas globais
+└── main.tsx            # Ponto de entrada React 18
+```
+
+---
+
+Feito com 💚 por [Ludson](https://github.com/Ludson96).
